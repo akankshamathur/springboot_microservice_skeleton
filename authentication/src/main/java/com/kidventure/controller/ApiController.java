@@ -34,28 +34,9 @@ public class ApiController {
 
     @RequestMapping(value = "/userLogin", method = {RequestMethod.POST})
     public ResponseEntity<?> authenticate(@RequestBody final LoginCommand dto) {
-        logger.info("inside action>>>>>>>>>>>>>>>>>>>>");
-        logger.info("inside action>>>>>>>>>>>>>>>>>>>>");
-        logger.info("inside action>>>>>>>>>>>>>>>>>>>>");
-        logger.info("inside action>>>>>>>>>>>>>>>>>>>>");
-        logger.info("inside action>>>>>>>>>>>>>>>>>>>>");
-        logger.info("inside action>>>>>>>>>>>>>>>>>>>>");
-        logger.info("inside action>>>>>>>>>>>>>>>>>>>>");
-        logger.info("inside action>>>>>>>>>>>>>>>>>>>>");
-        logger.info("inside action>>>>>>>>>>>>>>>>>>>>");
-        logger.info("username::::::");
-        logger.info(dto.getPassword());
-        logger.info(dto.getUsername());
-        User user = userRepository.findByUsername("ankitaankita@gmail.com");
-        logger.info("user::::::::::::::::::::::::::::::::");
-        logger.info("user::::::::::::::::::::::::::::::::");
-        logger.info("user::::::::::::::::::::::::::::::::");
-        logger.info("user::::::::::::::::::::::::::::::::");
-        logger.info("user::::::::::::::::::::::::::::::::");
-        logger.info(user.getUsername());
         final String token = tokenService.getToken(dto.getUsername(), dto.getPassword());
         if (token != null) {
-//            User user = userRepository.findByUsername(dto.getUsername());
+            User user = userRepository.findByUsername(dto.getUsername());
             final TokenCommand response = new TokenCommand(token, user.getUuid(), user.getAuthorities());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
@@ -75,9 +56,9 @@ public class ApiController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping(value="/demo")
-    public String hello(){
-        logger.info("inside hello");
-        return "Hello";
+    @GetMapping(value = "/demo")
+    public String demo() {
+        logger.info("inside demo   ");
+        return "demo";
     }
 }

@@ -3,6 +3,7 @@ package com.kidventure.config;
 import com.kidventure.controller.ApiController;
 import com.kidventure.model.ConsumerProfile;
 import com.kidventure.repository.ConsumerProfileRepository;
+import com.kidventure.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ public class DatabaseLoader implements CommandLineRunner {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     ConsumerProfileRepository consumerProfileRepository;
-
+@Autowired
+    UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(ApiController.class);
 
     @Override
@@ -27,7 +29,7 @@ public class DatabaseLoader implements CommandLineRunner {
     }
 
     private void createConsumer() {
-        if (consumerProfileRepository.findByUsername("consumer@gmail.com") == null) {
+        if (userRepository.findByUsername("consumer@gmail.com") == null) {
             ConsumerProfile consumerProfile = new ConsumerProfile();
             consumerProfile.setUsername("consumer@gmail.com");
             consumerProfile.setPassword(bCryptPasswordEncoder.encode("password"));
